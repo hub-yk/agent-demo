@@ -4,34 +4,43 @@ from urllib.parse import quote
 
 st.set_page_config(page_title="Food Behavior Agent", layout="wide")
 
+# ---------- URL HELPERS ----------
 def coupang_search(keyword):
     return f"https://www.coupang.com/np/search?q={quote(keyword)}"
 
 def kurly_search(keyword):
     return f"https://www.kurly.com/search?sword={quote(keyword)}"
 
-def baemin_search(keyword):
-    return f"https://www.google.com/search?q={quote('배달의민족 ' + keyword)}"
+def coupangeats_search(keyword):
+    # 공개 웹 검색 URL 형태. 기기/앱 설치 여부에 따라 앱 또는 웹으로 열릴 수 있습니다.
+    return f"https://www.coupangeats.com/search?keyword={quote(keyword)}"
 
+def baemin_search(keyword):
+    # 공개 웹 검색 URL 형태. 기기/앱 설치 여부에 따라 앱 또는 웹으로 열릴 수 있습니다.
+    return f"https://www.baemin.com/search?keyword={quote(keyword)}"
+
+# ---------- STYLE ----------
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 1.3rem;
+    padding-top: 0.7rem;
     padding-bottom: 2rem;
 }
 .main-title {
-    font-size: 2.25rem;
+    font-size: clamp(1.45rem, 4.2vw, 2.05rem);
+    line-height: 1.18;
     font-weight: 800;
     color: #1f2937;
-    margin-bottom: 0.25rem;
+    margin: 0 0 0.25rem 0;
+    word-break: keep-all;
 }
 .sub-title {
     color: #6b7280;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    font-size: clamp(0.85rem, 2.4vw, 1rem);
+    margin-bottom: 1.1rem;
 }
 .risk-title {
-    font-size: 2rem;
+    font-size: clamp(1.55rem, 4vw, 2rem);
     font-weight: 800;
     color: #dc2626;
 }
@@ -57,13 +66,19 @@ st.markdown("""
     color:#6b7280;
     font-size:0.9rem;
 }
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
 </style>
 """, unsafe_allow_html=True)
 
+# ---------- HEADER ----------
 st.markdown('<div class="main-title">🥗 Food Behavior Agent Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">소비데이터 기반 식습관 행동 변화 Agent</div>', unsafe_allow_html=True)
 
-# Top dashboard cards
+# ---------- TOP CARDS ----------
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -94,7 +109,7 @@ with col3:
 
 st.write("")
 
-# Action cards
+# ---------- ACTION CARDS ----------
 left, right = st.columns(2)
 
 with left:
@@ -122,10 +137,15 @@ with right:
 
         for menu in menu_items:
             st.markdown(f'<div class="food-chip">🍽 {menu}</div>', unsafe_allow_html=True)
-            st.link_button("배달앱 메뉴 검색", baemin_search(menu), use_container_width=True)
+            e1, e2 = st.columns(2)
+            with e1:
+                st.link_button("쿠팡이츠", coupangeats_search(menu), use_container_width=True)
+            with e2:
+                st.link_button("배민", baemin_search(menu), use_container_width=True)
 
 st.write("")
 
+# ---------- FEEDBACK ----------
 with st.container(border=True):
     st.subheader("🔄 Feedback Loop")
     f1, f2 = st.columns(2)
