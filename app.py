@@ -20,38 +20,53 @@ def baemin_search(keyword):
 # ---------- STYLE ----------
 st.markdown("""
 <style>
+/* 모바일/웹 모두 제목이 잘리지 않도록 전체 상단 여백 확보 */
 .block-container {
-    padding-top: 0.6rem;
+    padding-top: 1.4rem !important;
     padding-bottom: 2rem;
 }
+
+/* Streamlit 기본 상단 여백/앵커 영향 완화 */
+h1, h2, h3 {
+    scroll-margin-top: 80px;
+}
+
 .dashboard-header {
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
-    padding: 14px 18px;
+    padding: 22px 20px 18px 20px;
+    margin-top: 8px;
     margin-bottom: 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    overflow: visible;
 }
+
 .main-title {
-    font-size: 1.65rem;
-    line-height: 1.25;
+    font-size: clamp(1.45rem, 5vw, 1.95rem);
+    line-height: 1.35;
     font-weight: 800;
     color: #1f2937;
     margin: 0;
+    padding: 0;
     white-space: normal;
     overflow: visible;
     word-break: keep-all;
 }
+
 .sub-title {
     color: #6b7280;
-    font-size: 0.95rem;
-    margin-top: 4px;
+    font-size: clamp(0.88rem, 2.8vw, 0.98rem);
+    margin-top: 8px;
+    line-height: 1.35;
 }
+
 .risk-title {
     font-size: clamp(1.55rem, 4vw, 2rem);
     font-weight: 800;
     color: #dc2626;
 }
+
 .badge {
     display:inline-block;
     background:#fee2e2;
@@ -62,6 +77,7 @@ st.markdown("""
     margin-top: 0.4rem;
     margin-bottom: 0.8rem;
 }
+
 .food-chip {
     border: 1px solid #e5e7eb;
     border-radius: 14px;
@@ -70,6 +86,7 @@ st.markdown("""
     background: #ffffff;
     font-weight: 600;
 }
+
 .store-card {
     border: 1px solid #e5e7eb;
     border-radius: 16px;
@@ -78,17 +95,20 @@ st.markdown("""
     background: #ffffff;
     box-shadow: 0 1px 6px rgba(0,0,0,0.035);
 }
+
 .store-title {
     font-size: 1.02rem;
     font-weight: 750;
     color: #111827;
     margin-bottom: 4px;
 }
+
 .store-meta {
     color: #4b5563;
     font-size: 0.9rem;
     line-height: 1.55;
 }
+
 .reason {
     display:inline-block;
     margin-top: 6px;
@@ -99,10 +119,22 @@ st.markdown("""
     font-size: 0.82rem;
     font-weight: 650;
 }
+
 div[data-testid="stVerticalBlockBorderWrapper"] {
     background: #ffffff;
     border-radius: 18px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+/* 모바일에서 카드 사이 여백 확보 */
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 1.8rem !important;
+    }
+    .dashboard-header {
+        padding: 24px 16px 16px 16px;
+        margin-top: 10px;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
